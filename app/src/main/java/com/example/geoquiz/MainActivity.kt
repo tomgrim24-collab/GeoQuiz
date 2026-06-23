@@ -32,7 +32,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.graphics.Color
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -185,17 +186,19 @@ fun GeoQuizScreen(modifier: Modifier = Modifier) {
                         text = "Результат: $percentage%",
                         fontSize = 18.sp
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    when {
-                        percentage >= 80 -> Text("Отлично! 🎉", color = Color(0xFF4CAF50))
-                        percentage >= 60 -> Text("Хорошо! 😊", color = Color(0xFFFF9800))
-                        else -> Text("Попробуйте ещё раз! 💪", color = Color(0xFFF44336))
+                    if (percentage >= 80) {
+                        Text("Отлично! 🎉", color = Color(0xFF4CAF50))
+                    } else if (percentage >= 60) {
+                        Text("Хорошо! 😊", color = Color(0xFFFF9800))
+                    } else {
+                        Text("Попробуйте ещё раз! 💪", color = Color(0xFFF44336))
                     }
                 }
             },
             confirmButton = {
                 TextButton(
                     onClick = {
+                        // Сброс теста
                         currentIndex = 0
                         isAnswered = false
                         score = 0
